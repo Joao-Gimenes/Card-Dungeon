@@ -20,6 +20,7 @@ Criar sistema de movimentação
 Criar mecânica de dado para saber o nível de força da skill
 
 Cada personagem deve ter uma skill
+
 -------------------------RnF---------------------------------------------
 
 Criar site pro projeto WebGL
