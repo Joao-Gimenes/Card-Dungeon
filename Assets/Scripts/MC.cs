@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class MC : MonoBehaviour
 {
-    public GameObject cam1, cam2, cam3;
-    public Controller cont;
+    public GameObject mainCameraMove, charactersCameraMove, tableCameraMove;
+    public Controller actualController;
     public GameObject[] camP;
     
     public GameObject[] PanelC;
@@ -30,14 +30,12 @@ public class MC : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Encontra os objetos respectivos em cena
         player = FindObjectOfType(typeof(Player)) as Player;
         enemie = FindObjectOfType(typeof(Enemie)) as Enemie;
         bc = FindObjectOfType(typeof(BC)) as BC;
-        play.SetActive(false);
-        cont.level = 1;
-        cont.copas = 0; cont.paus = 0; cont.ouros = 0; cont.espadas = 0; cont.skillDmg = 0;
-        
 
+        resetGame();
 
     }
 
@@ -47,45 +45,52 @@ public class MC : MonoBehaviour
         
     }
 
+    public void resetGame( )
+    {
+        //Torna o botão de Start inativo
+        play.SetActive(false);
+
+        //Reseta as configurações iniciais do game
+        actualController.level = 1;
+        actualController.copas = 0; actualController.paus = 0; actualController.ouros = 0; actualController.espadas = 0; actualController.skillDmg = 0;
+    }
+
+    //Função chamada ao clicar em cada botão de quantia de players
     public void QuantidadePlayers(int playersQ)
     {
         switch (playersQ)
         {
             case 1:
-                cont.players = 1;
-                
+                actualController.players = 1;               
                 break;
             case 2:
-                cont.players = 2;
+                actualController.players = 2;
                 break;
             case 3:
-                cont.players = 3;
+                actualController.players = 3;
                 break;
             case 4:
-                cont.players = 4;
+                actualController.players = 4;
                 break;
         }
-
-        
         play.SetActive(true);
 
     }
+    //Ação do botão de Start
     public void Play()
     {
-       
-        cam1.SetActive(false);
+        //Desativa a cena inicial
+        mainCameraMove.SetActive(false);
         canvM.SetActive(false);
-       
-        cam2.SetActive(true);
+
+        //Ativa a jogatina
+        charactersCameraMove.SetActive(true);
         canvP.SetActive(true);
 
-
-
     }
+    //Função chamada no botão dos personagens
     public void selectCharacter(string name)
     {
-
-       // int i = 0;
 
         switch (name)
         {
@@ -93,34 +98,27 @@ public class MC : MonoBehaviour
 
             case "Aiko":
 
-                //while(i <= camP.Length) { camP[i].SetActive(false); while (i <= PanelC.Length) { PanelC[i].SetActive(false); } }
-
-                camP[1].SetActive(false);
-                PanelC[1].SetActive(false);
-                cont.perso = "Aiko";
+                camP[1].SetActive(false); 
+                PanelC[1].SetActive(false); 
+                actualController.perso = "Aiko";
                 camP[0].SetActive(true);
                 PanelC[0].SetActive(true);
-                cont.lifeP = 10;
+                actualController.lifeP = 10;
                 
                 break;
 
             case "Picolin":
 
-
-                // while (i <= camP.Length) { camP[i].SetActive(false); while (i <= PanelC.Length) { PanelC[i].SetActive(false); } }
-
                 camP[0].SetActive(false);
                 PanelC[0].SetActive(false);
-                cont.perso = "Picolin";
+                actualController.perso = "Picolin";
                 camP[1].SetActive(true);
                 PanelC[1].SetActive(true);
-                cont.lifeP = 12;
+                actualController.lifeP = 12;
                
                 break;
 
             case "Woul":
-
-                
 
                 perso = "Woul";
                 camP[2].SetActive(true);
@@ -129,8 +127,6 @@ public class MC : MonoBehaviour
                 
                 break;
 
-
-
         }
 
     }
@@ -138,11 +134,11 @@ public class MC : MonoBehaviour
         public void table()
         {
 
-           // if(playerId >= players)
-             
+        // if(playerId >= players)
 
-             cam2.SetActive(false);
-             cam3.SetActive(true);
+
+            charactersCameraMove.SetActive(false);
+            tableCameraMove.SetActive(true);
               
              canvP.SetActive(false);
             
@@ -150,30 +146,31 @@ public class MC : MonoBehaviour
             
 
          }
+    //Essa função é o que define qual será o terreno jogado
     public void fase(GameObject gb) 
     {
         int card = Random.Range(1, 10);
         int nipe = Random.Range(0, 4);
-        cont.inimigo = card;
+        actualController.inimigo = card;
 
         if (nipe == 0)
         {
-            cont.terrain = 0;
+            actualController.terrain = 0;
 
         }
         else if (nipe == 1)
         {
-            cont.terrain = 1;
+            actualController.terrain = 1;
 
         }
         else if (nipe == 2)
         {
-            cont.terrain = 2;
+            actualController.terrain = 2;
 
         }
         else if (nipe == 3)
         {
-            cont.terrain = 3;
+            actualController.terrain = 3;
 
         }
 
@@ -181,10 +178,6 @@ public class MC : MonoBehaviour
         // localPath = AssetDatabase.GenerateUniqueAssetPath(localPath);
     
         PrefabUtility.SaveAsPrefabAsset(gb, localPath);*/
-
-
-
-
 
         SceneManager.LoadSceneAsync("Battle");
 

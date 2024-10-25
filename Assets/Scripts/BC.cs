@@ -29,21 +29,94 @@ public class BC : MonoBehaviour
 
     public bool loja = true;
     
-    
-
-
-
     // Start is called before the first frame update
     void Start()
     {
-        
-
+        //Eu acho q esse op é o cache
         Instantiate(op);
 
-            
+        //Encontra os objetos necessários
+        enemie = FindObjectOfType(typeof(Enemie)) as Enemie;
+        player = FindObjectOfType(typeof(Player)) as Player;
 
+        //Fuck, isso aqui é o mesmo que nada, arrumo em outro momento, quando for mexer no multi
+        for (; player.player <= cont.players; player.player++)
+        {
+            Player.SetActive(true);
+        }
 
+        //Isso deveria declarar que o jogador 1 joga primeiro
+        player.player = 1;
+        loadStage();
 
+        for (; player.player <= cont.players; player.player++)
+        {
+            barPlayer.SetActive(true);
+            player.life = cont.lifeP;
+
+            switch (cont.perso)
+            {
+                case "Aiko":
+                    Aiko.SetActive(true);
+                    player.name = "Aiko";
+                    animP = Aiko.GetComponent<Animator>();
+                    player.classe = "Elemental";
+                    player.type = "Fire";
+                    player.lifeMax = 10;
+                    player.hab[1] = "Fire Storm";
+                    player.damage[1] = 1 + cont.skillDmg;
+                    break;
+
+                case "Picolin":
+                    Picolin.SetActive(true);
+                    player.name = "Picolin";
+                    anim = Picolin.GetComponent<Animator>();
+                    player.classe = "Paladin";
+                    player.lifeMax = 12;
+                    player.hab[1] = "Fury";
+                    player.damage[1] = 1 + cont.skillDmg;
+                    break;
+
+                case "Woul":
+                    player.name = "Woul";
+                    break;
+            }
+
+        }
+
+        player.player = 1;
+
+        Espadas = att.GetComponent<TextMeshProUGUI>();
+        Copas = lf.GetComponent<TextMeshProUGUI>();
+        Ouro = gd.GetComponent<TextMeshProUGUI>();
+        Paus = dmg.GetComponent<TextMeshProUGUI>();
+
+        menuB.SetActive(false);
+        menuA.SetActive(true);
+
+        player.hpBarLoad();       
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        loadLife();
+
+    }
+
+    public void loadLife()
+    {
+        string vida = player.life + " / " + player.lifeMax;
+        string vidaE = enemie.life + " / " + enemie.lifeMax;
+
+        player.lifeQuant.text = vida;
+        enemie.lifeQuant.text = vidaE;
+    }
+
+    public void loadStage()
+    {
+       
         switch (cont.terrain)
         {
             case 0:
@@ -61,46 +134,29 @@ public class BC : MonoBehaviour
                 terrain[3].SetActive(true);
                 break;
         }
-        enemie = FindObjectOfType(typeof(Enemie)) as Enemie;
-        
-        player = FindObjectOfType(typeof(Player)) as Player;
-
-
-        for (; player.player <= cont.players; player.player++)
-        {
-
-            Player.SetActive(true);
-        }
-        player.player = 1;
 
         switch (cont.level)
         {
 
             case 6:
-
                 enemie.lifeMax = 11;
                 enemie.life = enemie.lifeMax;
                 Bulldog.SetActive(true);
                 anim = Bulldog.GetComponent<Animator>();
-
                 break;
 
             case 8:
-
                 enemie.lifeMax = 12;
                 enemie.life = enemie.lifeMax;
                 Spider.SetActive(true);
                 anim = Spider.GetComponent<Animator>();
-
                 break;
 
             case 10:
-
                 enemie.lifeMax = 13;
                 enemie.life = enemie.lifeMax;
                 Golem.SetActive(true);
                 anim = Golem.GetComponent<Animator>();
-
                 break;
 
             default:
@@ -109,87 +165,9 @@ public class BC : MonoBehaviour
                 enemie.life = enemie.lifeMax;
                 minion[mini].SetActive(true);
                 anim = minion[mini].GetComponent<Animator>();
-
-
                 break;
 
-
         }
-
-
-
-        for (; player.player <= cont.players; player.player++)
-        {
-            barPlayer.SetActive(true);
-            player.life = cont.lifeP;
-
-
-            
-            
-
-
-
-            switch (cont.perso)
-            {
-                case "Aiko":
-
-                    Aiko.SetActive(true);
-                    player.name = "Aiko";
-                    animP = Aiko.GetComponent<Animator>();
-                    player.classe = "Elemental";
-                    player.type = "Fire";
-                    player.lifeMax = 10;
-                    player.hab[1] = "Fire Storm";
-                    player.damage[1] = 1 + cont.skillDmg;
-
-                    break;
-
-                case "Picolin":
-
-                    Picolin.SetActive(true);
-                    player.name = "Picolin";
-                    anim = Picolin.GetComponent<Animator>();
-                    player.classe = "Paladin";
-                    player.lifeMax = 12;
-                    player.hab[1] = "Fury";
-                    player.damage[1] = 1 + cont.skillDmg;
-
-                    break;
-
-                case "Woul":
-                    player.name = "Woul";
-                    break;
-            }
-
-
-        }
-
-        player.player = 1;
-
-        Espadas = att.GetComponent<TextMeshProUGUI>();
-        Copas = lf.GetComponent<TextMeshProUGUI>();
-        Ouro = gd.GetComponent<TextMeshProUGUI>();
-        Paus = dmg.GetComponent<TextMeshProUGUI>();
-
-        menuB.SetActive(false);
-        menuA.SetActive(true);
-
-
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        string vida = player.life + " / " + player.lifeMax;
-        string vidaE = enemie.life + " / " + enemie.lifeMax;
-
-        player.lifeQuant.text = vida;
-        enemie.lifeQuant.text = vidaE;
-
-       
-
-
     }
 
     public void Lutar()
@@ -212,6 +190,7 @@ public class BC : MonoBehaviour
 
     }*/
 
+    //Por enquanto, isso aqui é o que você precisa, mas deve ser aplicado depois do passo 1
     public void Skill()
     {
         if (player.skill <= 0)
@@ -222,101 +201,88 @@ public class BC : MonoBehaviour
             player.skill = 3;
         }
 
-
-
         if (enemie.life <= 0)
         {
-            string atk, dmg, gld, live;
-
-
-            anim.SetTrigger("isDead");
-
-            menuA.SetActive(false);
-            shop.SetActive(true);
-
-
-            switch (cont.terrain)
-            {
-
-                case 0:
-                    cont.espadas++;
-
-
-
-                    break;
-
-                case 1:
-                    cont.paus++;
-
-
-                    break;
-
-                case 2:
-                    cont.ouros += (int)enemie.lifeMax;
-
-
-                    break;
-                case 3:
-
-                    cont.copas += (int)enemie.lifeMax;
-                    player.life = player.life + enemie.lifeMax;
-                    if (player.life > player.lifeMax)
-                    {
-                        player.life = player.lifeMax;
-                    }
-
-
-
-
-                    break;
-            }
-
-            atk = cont.espadas.ToString();
-            dmg = cont.paus.ToString();
-            gld = cont.ouros.ToString();
-            live = cont.copas.ToString();
-
-
-            Espadas.text = "♠: " + atk;
-            Paus.text = "♣: " + dmg;
-            Ouro.text = "♦: " + gld;
-            Copas.text = "♥: " + live;
-
-
-            cont.lifeP = (int)player.life;
-
-            cont.copas = 0;
-
-
-
-
-
-
+            enemieIsDead();
         }
 
+        loadLife();
+    }
+
+    public void enemieIsDead()
+    {
+        string atk, dmg, gld, live;
+
+        anim.SetTrigger("isDead");
+
+        menuA.SetActive(false);
+        shop.SetActive(true);
+
+
+        switch (cont.terrain)
+        {
+
+            case 0:
+                cont.espadas++;
+                break;
+
+            case 1:
+                cont.paus++;
+                break;
+
+            case 2:
+                cont.ouros += (int)enemie.lifeMax;
+                break;
+            case 3:
+                cont.copas += (int)enemie.lifeMax;
+                player.life = player.life + enemie.lifeMax;
+                if (player.life > player.lifeMax)
+                {
+                    player.life = player.lifeMax;
+                }
+                break;
+        }
+
+        atk = cont.espadas.ToString();
+        dmg = cont.paus.ToString();
+        gld = cont.ouros.ToString();
+        live = cont.copas.ToString();
+
+
+        Espadas.text = "♠: " + atk;
+        Paus.text = "♣: " + dmg;
+        Ouro.text = "♦: " + gld;
+        Copas.text = "♥: " + live;
+
+
+        cont.lifeP = (int)player.life;
+
+        cont.copas = 0;
 
     }
 
+    //Achou o Passo 1
     public void Card()
     {
+        //Sim, isso é importante e provavelmente esqueci de te falar
         bool tie = false;
-
+        //Quando acontece um empate, a carta precisa sair da tela e não ser selecionavel, arraste pra cima e entenda o porquê
 
         int card = Random.Range(1, 10) + cont.espadas;
         int eneCard = Random.Range(1, 10) + cont.paus;
         print(card + " x " + eneCard);
+
+        //Player perde
         if(card < eneCard)
         {
             menuB.SetActive(false);
-
 
             menuA.SetActive(true);
             player.tomarDano(enemie.damage);
             anim.SetTrigger("isAttacking");
             tie = false;
             
-            
-        } else if(card > eneCard)
+        } else if(card > eneCard) //Player Ganha
         {
             menuB.SetActive(false);
             menuA.SetActive(true);
@@ -324,13 +290,13 @@ public class BC : MonoBehaviour
             anim.SetTrigger("isHitting");
             tie = false;
             
-        } else
+        } else //Empates
         {
-            enemie.damage++;
+            enemie.damage++; // O dano é acumulado quando acontece empate, isso de ambas as partes
             player.damage[0]++;
-            gameObject.GetComponent<Button>().interactable = false;
+            gameObject.GetComponent<Button>().interactable = false; //Isso provavelmente foi uma tentativa falha de tirar a carta do jogo
             tie = true;
-            
+            //O problema? Quando chegarmos à 3 empates seguidos, não sobram cartas na mesa, então ele deve comprar mais duas cartas
         }
 
         if (player.skill > 0)
@@ -339,7 +305,7 @@ public class BC : MonoBehaviour
         }
         
 
-
+        //Isso aqui faz voltar tudo ao normal
         if (player.damage[0] > 1 && tie != true || enemie.damage > 1 && tie != true)
         {
             player.damage[0] = 1;
@@ -350,80 +316,16 @@ public class BC : MonoBehaviour
 
         if (enemie.life <= 0)
         {
-            string atk, dmg, gld, live;
-            
-
-            anim.SetTrigger("isDead");
-
-            menuA.SetActive(false);
-            shop.SetActive(true);
-
-
-            switch (cont.terrain)
-            {
-
-                case 0:
-                    cont.espadas++;
-                    
-                    
-
-                    break;
-
-                case 1:
-                    cont.paus++;
-                    
-                    
-                    break;
-
-                case 2:
-                    cont.ouros += (int)enemie.lifeMax;
-                    
-                   
-                    break;
-                case 3:
-                    player.life = player.life + enemie.lifeMax;
-                    if (player.life > player.lifeMax)
-                    {
-                        player.life = player.lifeMax;
-                    }
-
-                    
-                   
-
-                    break;
-            }
-
-            atk = cont.espadas.ToString();
-            dmg = cont.paus.ToString();
-            gld = cont.ouros.ToString();
-            live = cont.copas.ToString();
-
-
-            Espadas.text = "♠: " + atk;
-            Paus.text = "♣: " + dmg;
-            Ouro.text = "♦: " + gld;
-            Copas.text = "♥: " + live;
-
-
-            cont.lifeP = (int)player.life;
-            cont.copas = 0;
-
-            
-
-           
-
+            enemieIsDead();
         }
 
-        
+        loadLife();
     }
 
     public void abrirLoja()
     {
-
         LojaButton.SetActive(false);
         LojaPanel.SetActive(true);
-
-
     }
 
 
@@ -434,24 +336,18 @@ public class BC : MonoBehaviour
 
         if (cont.level >= 6)
         {
-
             SceneManager.LoadSceneAsync("Cardboss");
-
         }
         else
         {
-
             SceneManager.LoadSceneAsync("Cardtable");
-
         }
         
-
     }
 
     public void comprarSkill()
     {
 
-        
         if(cont.ouros >= 3)
         {
             cont.skillDmg++;
@@ -463,13 +359,11 @@ public class BC : MonoBehaviour
         }
         else { }
 
-
     }
 
     public void comprarVida()
     {
 
-        
         if (cont.ouros >= 1)
         {
             player.life++;
@@ -479,7 +373,6 @@ public class BC : MonoBehaviour
             Ouro.text = "♦: " + gld;
         }
         else { }
-
 
     }
 

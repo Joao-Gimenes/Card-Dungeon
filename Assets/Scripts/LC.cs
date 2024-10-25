@@ -16,7 +16,6 @@ public class LC : MonoBehaviour
 
     public GameObject[] levels;
     
-
     private BC bc;
     public MC mc;
     private Enemie enemie;
@@ -30,12 +29,21 @@ public class LC : MonoBehaviour
         enemie = FindObjectOfType(typeof(Enemie)) as Enemie;
         bc = FindObjectOfType(typeof(BC)) as BC;
 
-       
+        verifyStage();
 
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public void verifyStage()
+    {
         switch (cont.level)
         {
             case 1:
-
                 break;
             case 2:
                 levels[0].SetActive(false);
@@ -51,7 +59,6 @@ public class LC : MonoBehaviour
                 levels[5].SetActive(true);
                 break;
             case 4:
-
                 levels[0].SetActive(false);
                 levels[3].SetActive(false);
                 levels[4].SetActive(false);
@@ -61,9 +68,7 @@ public class LC : MonoBehaviour
                 levels[8].SetActive(true);
                 levels[9].SetActive(true);
                 break;
-
             case 5:
-
                 levels[0].SetActive(false);
                 levels[6].SetActive(false);
                 levels[7].SetActive(false);
@@ -76,33 +81,26 @@ public class LC : MonoBehaviour
                 levels[14].SetActive(true);
                 break;
             case 6:
-
                 levels[10].SetActive(false);
                 levels[11].SetActive(false);
                 levels[12].SetActive(false);
                 levels[13].SetActive(false);
                 levels[14].SetActive(false);
                 levels[0].SetActive(true);
-
                 break;
-
             case 7:
                 levels[0].SetActive(false);
                 levels[1].SetActive(true);
                 levels[2].SetActive(true);
                 levels[3].SetActive(true);
                 break;
-
             case 8:
                 levels[0].SetActive(false);
                 levels[1].SetActive(false);
                 levels[2].SetActive(false);
                 levels[3].SetActive(false);
                 levels[4].SetActive(true);
-                
-                
                 break;
-
             case 9:
                 levels[0].SetActive(false);
                 levels[1].SetActive(false);
@@ -111,7 +109,6 @@ public class LC : MonoBehaviour
                 levels[4].SetActive(false);
                 levels[5].SetActive(true);
                 levels[6].SetActive(true);
-
                 break;
             case 10:
                 levels[0].SetActive(false);
@@ -122,29 +119,14 @@ public class LC : MonoBehaviour
                 levels[5].SetActive(false);
                 levels[6].SetActive(false);
                 levels[7].SetActive(true);
-
                 break;
+
             case 11:
                 SceneManager.LoadSceneAsync("Dungeon");
 
                 break;
-
-
         }
-
-
-
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    
-    
-    
 
    
     public void fase(GameObject gb)
@@ -173,15 +155,10 @@ public class LC : MonoBehaviour
             cont.terrain = 3;
 
         }
-
-      
-
+        
       /*  string localPath = "Assets/MainC/Prefab" + gb.name + ".prefab";
         // localPath = AssetDatabase.GenerateUniqueAssetPath(localPath);
         PrefabUtility.SaveAsPrefabAssetAndConnect(gb, localPath, InteractionMode.UserAction);*/
-
-
-
 
         SceneManager.LoadSceneAsync("Battle");
 

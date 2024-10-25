@@ -38,15 +38,7 @@ public class Player : MonoBehaviour
         barHp = GameObject.Find("lifebar").transform;
 
         life = mc.lifeP;
-
-        
-        
-        
-        
-       
-
-
-
+        hpBarLoad();
 
     }
 
@@ -54,19 +46,24 @@ public class Player : MonoBehaviour
    public void tomarDano(int damage)
     {
         life -= damage;
-        float porc = life / lifeMax;
-
-
-        vetor = barHp.transform.localScale;
-        vetor.x = porc;
-        barHp.transform.localScale = vetor;
+        hpBarLoad();
 
         if (life <= 0)
         {
             life = 0;
             SceneManager.LoadSceneAsync("Dungeon");
-
         }
 
     }
+
+    public void hpBarLoad()
+    {
+        float porc = life / lifeMax;
+        vetor = barHp.transform.localScale;
+        vetor.x = porc;
+        barHp.transform.localScale = vetor;
+    }
+
+
+
 }
