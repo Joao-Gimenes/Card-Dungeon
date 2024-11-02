@@ -64,6 +64,46 @@ public class Player : MonoBehaviour
         barHp.transform.localScale = vetor;
     }
 
+    public void activeSkill( string skill_name )
+    {
+
+        switch (skill_name)
+        {
+            case "Fire Storm":
+                directDamageSkill();
+                break;
+
+            case "Fury":
+                battleDamageSkill();
+                break;
+
+            case "Life Wind":
+                regenSkill();
+                break;
+        }
+
+    }
+
+    public void directDamageSkill()
+    {
+        bc.enemieHitted(damage[1]);
+    }
+
+    public void battleDamageSkill()
+    {
+        damage[0] += damage[1];
+    }
+
+    public void regenSkill()
+    {
+        life += damage[1];
+
+        if (life > lifeMax)
+        {
+            life = lifeMax;
+        }
+        hpBarLoad();
+    }
 
 
 }

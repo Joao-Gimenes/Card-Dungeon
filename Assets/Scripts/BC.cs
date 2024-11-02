@@ -70,7 +70,7 @@ public class BC : MonoBehaviour
                 case "Picolin":
                     Picolin.SetActive(true);
                     player.name = "Picolin";
-                    anim = Picolin.GetComponent<Animator>();
+                    animP = Picolin.GetComponent<Animator>();
                     player.classe = "Paladin";
                     player.lifeMax = 12;
                     player.hab[1] = "Fury";
@@ -112,6 +112,10 @@ public class BC : MonoBehaviour
 
         player.lifeQuant.text = vida;
         enemie.lifeQuant.text = vidaE;
+
+        player.hpBarLoad();
+        enemie.hpBarLoad();
+
     }
 
     public void loadStage()
@@ -195,18 +199,22 @@ public class BC : MonoBehaviour
     {
         if (player.skill <= 0)
         {
-            enemie.tomarDano(player.damage[1]);
-            anim.SetTrigger("isHitting");
-            
+            player.activeSkill(player.hab[1]);
             player.skill = 3;
         }
 
+     }
+
+    public void enemieHitted(int damage)
+    {
+        enemie.tomarDano(damage);
+        anim.SetTrigger("isHitting");
         if (enemie.life <= 0)
         {
             enemieIsDead();
         }
-
         loadLife();
+
     }
 
     public void enemieIsDead()
@@ -286,8 +294,8 @@ public class BC : MonoBehaviour
         {
             menuB.SetActive(false);
             menuA.SetActive(true);
-            enemie.tomarDano(player.damage[0]);
-            anim.SetTrigger("isHitting");
+
+            enemieHitted(player.damage[0]);
             tie = false;
             
         } else //Empates
@@ -311,8 +319,6 @@ public class BC : MonoBehaviour
             player.damage[0] = 1;
             enemie.damage = 1;
         }
-
-        
 
         if (enemie.life <= 0)
         {

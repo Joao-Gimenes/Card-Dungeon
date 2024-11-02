@@ -31,13 +31,9 @@ public class Enemie : MonoBehaviour
         player = FindObjectOfType(typeof(Player)) as Player;
         bc = FindObjectOfType(typeof(BC)) as BC;
         mc = FindObjectOfType(typeof(MC)) as MC;
-       
 
         barHp = GameObject.Find("Lfe").transform;
         life = lifeMax;
-        
-
-
 
     }
 
@@ -45,16 +41,21 @@ public class Enemie : MonoBehaviour
     public void tomarDano(int damage)
     {
         life -= damage;
-        float porc = life / lifeMax;
+        hpBarLoad();
 
 
-        vetor = barHp.transform.localScale;
-        vetor.x = porc;
-        barHp.transform.localScale = vetor;
         if (life <= 0)
         {
             life = 0;
 
         }
     }
+    public void hpBarLoad()
+    {
+        float porc = life / lifeMax;
+        vetor = barHp.transform.localScale;
+        vetor.x = porc;
+        barHp.transform.localScale = vetor;
+    }
+
 }
