@@ -9,7 +9,8 @@ Pesquisar e criar algoritmo para aleatoriedade não ser tão quebrada
 
 Fazer algo visual para os números de combate
 
-Resolver problemas de animation do picolin
+Resolver problemas de animation do picolin 
+== Resolvido
 
 Ajustar "multiplayer"
 
@@ -19,7 +20,8 @@ Criar sistema de movimentação
 
 Criar mecânica de dado para saber o nível de força da skill
 
-Cada personagem deve ter uma skill
+Cada personagem deve ter uma skill 
+== Resolvido
 
 -------------------------RnF---------------------------------------------
 
