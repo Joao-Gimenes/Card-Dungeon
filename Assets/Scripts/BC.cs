@@ -17,6 +17,9 @@ public class BC : MonoBehaviour
     public GameObject menuA, menuB, shop, op, Aiko, Picolin;
     public GameObject cam1;
 
+    public Sprite[] cardFaces;
+    public GameObject[] cards;
+
     public GameObject LojaPanel;
     public GameObject LojaButton;
 
@@ -270,13 +273,16 @@ public class BC : MonoBehaviour
     }
 
     //Achou o Passo 1
-    public void Card()
+    public void Card(Card cardActual)
     {
         //Sim, isso é importante e provavelmente esqueci de te falar
         bool tie = false;
+        GameObject[] cards = GameObject.FindGameObjectsWithTag("NullCard");
         //Quando acontece um empate, a carta precisa sair da tela e não ser selecionavel, arraste pra cima e entenda o porquê
 
-        int card = Random.Range(1, 10) + cont.espadas;
+        int card = cardActual.value + cont.espadas;
+        cardActual.changeValue();
+
         int eneCard = Random.Range(1, 10) + cont.paus;
         print(card + " x " + eneCard);
 
@@ -302,7 +308,8 @@ public class BC : MonoBehaviour
         {
             enemie.damage++; // O dano é acumulado quando acontece empate, isso de ambas as partes
             player.damage[0]++;
-            gameObject.GetComponent<Button>().interactable = false; //Isso provavelmente foi uma tentativa falha de tirar a carta do jogo
+            //  gameObject.GetComponent<Button>().interactable = false; //Isso provavelmente foi uma tentativa falha de tirar a carta do jogo
+            cardActual.defaultValue();
             tie = true;
             //O problema? Quando chegarmos à 3 empates seguidos, não sobram cartas na mesa, então ele deve comprar mais duas cartas
         }
@@ -318,6 +325,18 @@ public class BC : MonoBehaviour
         {
             player.damage[0] = 1;
             enemie.damage = 1;
+
+        }
+
+        if (cards.Length > 0 && tie == false)
+        {
+            foreach (GameObject null_card in cards)
+            {
+                null_card.GetComponent<Card>().resetCard();
+            }
+        } else if(cards.Length > 2 && tie == true)
+        {
+            this.Card(cards[0].GetComponent<Card>());
         }
 
         if (enemie.life <= 0)
