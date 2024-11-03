@@ -15,6 +15,7 @@ Resolver problemas de animation do picolin
 Ajustar "multiplayer"
 
 As cartas devem ser visíveis antes de jogar
+== Resolvido
 
 Criar sistema de movimentação
 
