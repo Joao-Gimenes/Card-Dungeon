@@ -6,6 +6,7 @@
 --------------------------RF---------------------------------------------
 
 Pesquisar e criar algoritmo para aleatoriedade não ser tão quebrada
+== Resolvido
 
 Fazer algo visual para os números de combate
 
@@ -20,6 +21,7 @@ As cartas devem ser visíveis antes de jogar
 Criar sistema de movimentação
 
 Criar mecânica de dado para saber o nível de força da skill
+== Resolvido
 
 Cada personagem deve ter uma skill 
 == Resolvido
