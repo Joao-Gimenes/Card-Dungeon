@@ -64,22 +64,44 @@ public class Player : MonoBehaviour
         barHp.transform.localScale = vetor;
     }
 
-    public void activeSkill( string skill_name )
+    public void activeSkill( string skill_name, List<int> results )
     {
 
-        switch (skill_name)
+        int cust = results[0] / 2 * 10;
+        int effective = results[1] / 2 * 10;
+        int critic = (results[2] + results[0])  / 2 * 10;
+
+        print(cust + " x " + effective + " x " + critic);
+
+        if ( effective > cust )
         {
-            case "Fire Storm":
-                directDamageSkill();
-                break;
+            print("Efetivo");
+            switch (skill_name)
+            {
+                case "Fire Storm":
+                    directDamageSkill();
+                    break;
 
-            case "Fury":
-                battleDamageSkill();
-                break;
+                case "Fury":
+                    battleDamageSkill();
+                    break;
 
-            case "Life Wind":
-                regenSkill();
-                break;
+                case "Life Wind":
+                    regenSkill();
+                    break;
+            }
+        } else
+        {
+            print("Nada Efetivo");
+        }
+        
+        if ( effective >= critic )
+        {
+            print("Crítico");
+            skill = 0;
+        } else
+        {
+            skill = 3;
         }
 
     }

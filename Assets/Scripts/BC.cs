@@ -19,6 +19,10 @@ public class BC : MonoBehaviour
 
     public Sprite[] cardFaces;
     public GameObject[] cards;
+    public DiceManager Dice;
+    public DeckManager Enemie_Deck_Controller;
+
+    public Dice[] Dices;
 
     public GameObject LojaPanel;
     public GameObject LojaButton;
@@ -202,8 +206,16 @@ public class BC : MonoBehaviour
     {
         if (player.skill <= 0)
         {
-            player.activeSkill(player.hab[1]);
-            player.skill = 3;
+            List<int> results = Dice.PlayDice(3);
+
+            Dices[0].RolarDado(results[0]);
+            Dices[1].RolarDado(results[1]);
+            Dices[2].RolarDado(results[2]);
+
+            StartCoroutine(WaitingDices(results));
+            
+            //player.activeSkill(player.hab[1], results);
+          // player.skill = 3;
         }
 
      }
@@ -283,7 +295,8 @@ public class BC : MonoBehaviour
         int card = cardActual.value + cont.espadas;
         cardActual.changeValue();
 
-        int eneCard = Random.Range(1, 10) + cont.paus;
+        List<int> hand = Enemie_Deck_Controller.DrawCards(1);
+        int eneCard = hand[0] + cont.paus;
         print(card + " x " + eneCard);
 
         //Player perde
@@ -399,6 +412,13 @@ public class BC : MonoBehaviour
         }
         else { }
 
+    }
+
+    private IEnumerator WaitingDices(List<int> results)
+    {
+        yield return new WaitForSeconds( 1.5f );
+        player.activeSkill(player.hab[1], results);
+        // Aqui você pode colocar qualquer outra ação que deseja executar após a espera
     }
 
 }
