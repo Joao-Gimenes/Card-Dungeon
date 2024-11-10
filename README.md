@@ -9,16 +9,13 @@ Pesquisar e criar algoritmo para aleatoriedade não ser tão quebrada
 == Resolvido
 
 Fazer algo visual para os números de combate
+== Resolvido
 
 Resolver problemas de animation do picolin 
 == Resolvido
 
-Ajustar "multiplayer"
-
 As cartas devem ser visíveis antes de jogar
 == Resolvido
-
-Criar sistema de movimentação
 
 Criar mecânica de dado para saber o nível de força da skill
 == Resolvido
