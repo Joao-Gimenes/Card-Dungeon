@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeckManager : MonoBehaviour
 {
-    private List<int> deck;
+    public List<int> deck;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +29,7 @@ public class DeckManager : MonoBehaviour
     {
         for (int i = deck.Count - 1; i > 0; i--)
         {
-            int j = Random.Range(0, i + 1); // Gera um índice aleatório entre 0 e i
+            int j = Random.Range(1, i + 1); // Gera um índice aleatório entre 0 e i
             // Troca a carta em i com a carta em j
             int temp = deck[i];
             deck[i] = deck[j];

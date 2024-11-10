@@ -6,7 +6,7 @@ using TMPro;
 
 public class Card : MonoBehaviour
 {
-    private BC bc;
+    private BattleControiller bc;
     public int value;
     public int priority;
     public Sprite face;
@@ -15,7 +15,7 @@ public class Card : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bc = FindObjectOfType(typeof(BC)) as BC;
+        bc = FindObjectOfType(typeof(BattleControiller)) as BattleControiller;
         Deck_Controller.ShuffleDeck();
         changeValue();
     }

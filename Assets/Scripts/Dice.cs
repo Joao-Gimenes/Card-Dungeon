@@ -36,9 +36,9 @@ public class Dice : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0)) // Detecta o clique com o botão esquerdo do mouse
         {
-            RolarDado(Random.Range(1, 20));
+            DetectarClique();
         }
 
         if (estaRolando)
@@ -57,6 +57,7 @@ public class Dice : MonoBehaviour
 
     public void RolarDado(int valorDesejado)
     {
+        posicaoInicial = transform.position;
         if (!estaRolando && !estaChacoalhando)
         {
             estaRolando = true;
@@ -148,6 +149,21 @@ public class Dice : MonoBehaviour
             transform.rotation = rotacaoFinal; // Garante que termina na rotação final exata
             estaChacoalhando = false;
             Debug.Log("Rolagem Finalizada! Valor final: " + valorFinal);
+        }
+    }
+
+    private void DetectarClique()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Cria um ray a partir da posição do mouse
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit)) // Dispara o raycast
+        {
+            if (hit.collider != null && hit.collider.gameObject == gameObject)
+            {
+                // Chama o evento quando o raycast atinge o objeto
+                RolarDado(Random.Range(1, 20));
+            }
         }
     }
 

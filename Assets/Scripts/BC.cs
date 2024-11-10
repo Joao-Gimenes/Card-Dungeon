@@ -108,11 +108,11 @@ public class BC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        loadLife();
+        //loadLife();
 
     }
 
-    public void loadLife()
+    /*public void loadLife()
     {
         string vida = player.life + " / " + player.lifeMax;
         string vidaE = enemie.life + " / " + enemie.lifeMax;
@@ -123,7 +123,7 @@ public class BC : MonoBehaviour
         player.hpBarLoad();
         enemie.hpBarLoad();
 
-    }
+    }*/
 
     public void loadStage()
     {
@@ -226,13 +226,13 @@ public class BC : MonoBehaviour
         anim.SetTrigger("isHitting");
         if (enemie.life <= 0)
         {
-            enemieIsDead();
+           // enemieIsDead();
         }
-        loadLife();
+      //  loadLife();
 
     }
 
-    public void enemieIsDead()
+    /*public void enemieIsDead()
     {
         string atk, dmg, gld, live;
 
@@ -258,7 +258,7 @@ public class BC : MonoBehaviour
                 break;
             case 3:
                 cont.copas += (int)enemie.lifeMax;
-                player.life = player.life + enemie.lifeMax;
+                //player.life = player.life + enemie.lifeMax;
                 if (player.life > player.lifeMax)
                 {
                     player.life = player.lifeMax;
@@ -282,7 +282,7 @@ public class BC : MonoBehaviour
 
         cont.copas = 0;
 
-    }
+    }*/
 
     //Achou o Passo 1
     public void Card(Card cardActual)
@@ -354,10 +354,10 @@ public class BC : MonoBehaviour
 
         if (enemie.life <= 0)
         {
-            enemieIsDead();
+           // enemieIsDead();
         }
 
-        loadLife();
+       // loadLife();
     }
 
     public void abrirLoja()
@@ -405,7 +405,7 @@ public class BC : MonoBehaviour
         if (cont.ouros >= 1)
         {
             player.life++;
-            
+
             cont.ouros -= 1;
             string gld = cont.ouros.ToString();
             Ouro.text = "♦: " + gld;
@@ -413,7 +413,6 @@ public class BC : MonoBehaviour
         else { }
 
     }
-
     private IEnumerator WaitingDices(List<int> results)
     {
         yield return new WaitForSeconds( 1.5f );

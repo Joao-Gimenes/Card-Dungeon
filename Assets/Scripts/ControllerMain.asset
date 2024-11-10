@@ -12,8 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76d8f31ad9fda794d8b87a7b40fc9d3e, type: 3}
   m_Name: ControllerMain
   m_EditorClassIdentifier: 
-  perso: 
+  perso: Picolin
   inimigo: 0
   terrain: 0
-  players: 0
-  level: 1
+  players: 1
+  level: 8
+  copas: 0
+  espadas: 18
+  ouros: 0
+  paus: 0
+  lifeP: 2
+  skillDmg: 7

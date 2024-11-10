@@ -8,60 +8,78 @@ using TMPro;
 public class Player : MonoBehaviour
 {
     private Enemie enemie;
-    private BC bc;
+    private BattleControiller bc;
     private MC mc;
 
     public string classe, type;
     public int number,  skill, player = 1;
     public string lifebar;
-    public float life, lifeMax;
+    public int life, lifeMax;
     public string[] hab;
     public int[] damage;
 
-    public Transform barHp;
-    public GameObject ttHp;
-   // public GameObject[] Skins;
-    public TextMeshProUGUI lifeQuant;
-    private Vector3 vetor;
+    public GameObject LifeCam, DiceCam;
+
+    public GameObject[] totalHp;
+
 
     
 
     // Start is called before the first frame update
     void Start()
     {
-        lifeQuant = ttHp.GetComponent<TextMeshProUGUI>();
+        //lifeQuant = ttHp.GetComponent<TextMeshProUGUI>();
         mc = FindObjectOfType(typeof(MC)) as MC;
         
         enemie = FindObjectOfType(typeof(Enemie)) as Enemie;
-        bc = FindObjectOfType(typeof(BC)) as BC;
+        bc = FindObjectOfType(typeof(BattleControiller)) as BattleControiller;
 
-        barHp = GameObject.Find("lifebar").transform;
+        //barHp = GameObject.Find("lifebar").transform;
 
-        life = mc.lifeP;
-        hpBarLoad();
+        //life = mc.lifeP;
+        //hpBarLoad();
 
     }
 
     // Update is called once per frame
    public void tomarDano(int damage)
     {
+        LifeCam.SetActive(true);
         life -= damage;
-        hpBarLoad();
 
         if (life <= 0)
         {
             life = 0;
-            SceneManager.LoadSceneAsync("Dungeon");
+            //SceneManager.LoadSceneAsync("Dungeon");
+            bc.EndGame();
         }
+        StartCoroutine(DelayHpLoad());
+        //LifeCam.SetActive(false);
 
     }
 
-    public void hpBarLoad()
+    public void hpBarLoad(string method = "damage", int value = 0)
     {
-        float porc = life / lifeMax;
-        vetor = barHp.transform.localScale;
-        vetor.x = porc;
-        barHp.transform.localScale = vetor;
+        
+        if (method == "recover")
+        {
+            if(totalHp[ lifeMax - 1 ].activeSelf != true)
+            {
+                for (int i = 1; i <= life; i++)
+                {
+                    totalHp[i - 1].SetActive(true);
+                }
+            }
+           
+        }
+        else
+        {
+            for (int i = lifeMax; i > life; i--)
+            {
+                totalHp[i - 1].SetActive(false);
+            }
+        }
+
     }
 
     public void activeSkill( string skill_name, List<int> results )
@@ -124,8 +142,35 @@ public class Player : MonoBehaviour
         {
             life = lifeMax;
         }
-        hpBarLoad();
+        StartCoroutine(DelayHpLoad("recover"));
     }
 
+    private IEnumerator DelayHpLoad(string value = "damage")
+    {
+        bc.canvaController.EndCanva();
+        LifeCam.SetActive(true);
+        // Delay de 2 segundos antes de carregar a barra de vida
+        yield return new WaitForSeconds(2f);
+        hpBarLoad();
+        // Delay de 2 segundos após o carregamento da barra de vida
+        yield return new WaitForSeconds(2f);
+        bc.canvaController.Initiallize();
+        LifeCam.SetActive(false);
+    }
+
+    public IEnumerator DelayDice(string skill_name, List<int> results)
+    {
+        DiceCam.SetActive(true);
+        // Delay de 2 segundos antes de carregar a barra de vida
+        yield return new WaitForSeconds(2f);
+        bc.Dices[0].RolarDado(results[0]);
+        bc.Dices[1].RolarDado(results[1]);
+        bc.Dices[2].RolarDado(results[2]);
+        // Delay de 2 segundos após o carregamento da barra de vida
+        yield return new WaitForSeconds(2f);
+        activeSkill(skill_name, results);
+        bc.canvaController.Initiallize();
+        DiceCam.SetActive(false);
+    }
 
 }

@@ -17,4 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Cardboss.unity
     guid: aa0b105d1fd56584daa0e72af41ed5b0
+  - enabled: 1
+    path: Assets/Scenes/Editor.unity
+    guid: ee05bd7347db07042ab65f6cadad520f
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
